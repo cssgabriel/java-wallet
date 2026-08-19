@@ -23,6 +23,13 @@ public class UserService {
     return repository.findAll().stream().map(u -> convertToDto(u)).toList();
   }
 
+  public UserResponse getById(Long id) {
+    User user = repository.findById(id)
+      .orElseThrow(() -> new EntityNotFoundException("Usuário não encontrado"));
+
+    return convertToDto(user);
+  }
+
   public void create(UserRequest dto) {
     boolean emailExists = repository.existsByEmail(dto.email());
     if (emailExists) throw new EmailAlreadyExistsException("E-mail já cadastrado");
