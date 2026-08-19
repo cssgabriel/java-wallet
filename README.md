@@ -15,15 +15,16 @@ A Wallet API permite que um usuário organize uma ou mais carteiras (`Wallet`), 
 
 ## Tecnologias
 
-- **Java 17+**
-- **Spring Boot**
-  - Spring Web (REST)
+- **Java 25**
+- **Spring Boot 4.1**
+  - Spring Web MVC (REST)
   - Spring Data JPA / Hibernate
   - Bean Validation (Jakarta Validation)
-- **Banco de dados relacional** (via Spring Data JPA)
+- **PostgreSQL**
 - **RestClient** (Spring) para integração HTTP com a API da Brapi
 - **Records (Java)** para DTOs imutáveis
-- **Maven/Gradle** (build)
+- **Maven** (build)
+- **Spring Boot DevTools** (produtividade em desenvolvimento)
 
 ## Estrutura do projeto
 
@@ -34,7 +35,7 @@ src/main/java/css/gabriel/wallet
 ├── repository/     # Interfaces Spring Data JPA
 ├── model/          # Entidades JPA
 ├── dto/            # Records de entrada/saída da API
-├── dto/brapi/       # DTOs de resposta da API externa (Brapi)
+├── dto/brapi/      # DTOs de resposta da API externa (Brapi)
 ├── mapper/         # Conversão entre DTOs da Brapi e DTOs da API
 └── exception/      # Exceções de domínio
 ```
@@ -88,13 +89,17 @@ Se `unitPrice` não for informado, a API utiliza a cotação atual do ativo (obt
 
 ## Roadmap
 
+Próximos passos planejados para evolução do projeto:
+
 - [ ] **Spring Security + JWT** — autenticação e autorização por usuário
 - [ ] **Testes automatizados** (JUnit + Mockito) — cobertura de services e regras de negócio
 - [ ] **Testcontainers** — testes de integração contra banco real
 - [ ] **Cache com Redis** — reduzir chamadas repetidas à Brapi
-- [ ] **RabbitMQ** — processamento assíncrono (a definir escopo)
+- [ ] **Endpoint de estatísticas financeiras** (`/statistics` ou similar) — preço médio, rentabilidade, TIR (taxa interna de retorno) e CAGR (taxa de crescimento anual composta) por ativo e por carteira
 
 ## Como rodar localmente
+
+Pré-requisito: uma instância PostgreSQL disponível e configurada em `application.properties`.
 
 ```bash
 # Configurar a variável de ambiente com o token da Brapi
