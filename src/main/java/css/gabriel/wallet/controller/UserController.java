@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -17,9 +18,11 @@ import css.gabriel.wallet.dto.UserRequest;
 import css.gabriel.wallet.dto.UserResponse;
 import css.gabriel.wallet.service.UserService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 
 @RestController
 @RequestMapping("/users")
+@Validated
 public class UserController {
   private final UserService service;
 
@@ -30,6 +33,11 @@ public class UserController {
   @GetMapping
   public ResponseEntity<List<UserResponse>> getAll() {
     return ResponseEntity.ok().body(service.getAll());
+  }
+
+  @GetMapping("/{id}")
+  public ResponseEntity<UserResponse> getById(@Min(0) @PathVariable Long id) {
+    return ResponseEntity.ok().body(service.getById(id));
   }
 
   @PostMapping
@@ -44,11 +52,7 @@ public class UserController {
 
   @PatchMapping("/{id}")
   public ResponseEntity<UserResponse> update(@PathVariable Long id, @Valid @RequestBody UserRequest dto) {
-    try {
-      return ResponseEntity.ok(service.update(id, dto));
-    } catch (Exception e) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-    }
+    return ResponseEntity.ok(service.update(id, dto));
   }
 
   @DeleteMapping("/delete")
