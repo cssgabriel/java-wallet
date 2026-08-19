@@ -27,16 +27,6 @@ public final class BrapiAssetMapper {
     );
   }
 
-  // public static AssetResponse toAssetResponse(AssetRequest request) {
-  //   return new AssetResponse(
-  //     request.name(),
-  //     request.price(),
-  //     request.ticker(),
-  //     request.currency(),
-  //     request.logoUrl()
-  //   );
-  // }
-
   public static TickerPageResponse toTickerPageResponse(BrapiTickersResponse response) {
     List<TickerResponse> tickers = response.results().stream()
       .map(item -> new TickerResponse(item.symbol(), item.name(), item.logoUrl()))
