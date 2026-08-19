@@ -38,11 +38,6 @@ public class WalletController {
     return ResponseEntity.ok().body(service.getById(id));
   }
 
-  @GetMapping(value = "/{id}/transactions")
-  public ResponseEntity<List<WalletResponse>> getTransactions(@PathVariable Long id) {
-    return ResponseEntity.ok().body(service.getAll(id));
-  }
-
   @PostMapping
   public ResponseEntity<WalletResponse> create(@RequestBody @Valid WalletRequest dto) {
     return ResponseEntity.status(HttpStatus.CREATED).body(service.create(dto));
