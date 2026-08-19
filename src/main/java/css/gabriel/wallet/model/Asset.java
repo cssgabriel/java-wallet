@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import css.gabriel.wallet.dto.AssetRequest;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,8 +23,10 @@ public class Asset {
 
   private String name;
 
+  @Column(precision = 19, scale = 8)
   private BigDecimal price;
 
+  @Column(unique = true, nullable = false)
   private String ticker;
 
   private String currency;
