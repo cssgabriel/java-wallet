@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -25,24 +26,40 @@ public class Transaction {
   private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "wallet_id")
+  @JoinColumn(name = "wallet_id", nullable = false)
   private Wallet wallet;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "asset_id")
+  @JoinColumn(name = "asset_id", nullable = false)
   private Asset asset;
 
   @Enumerated(EnumType.STRING)
   private TransactionType type;
 
+  @Column(precision = 19, scale = 8)
   private BigDecimal quantity;
 
+  @Column(precision = 19, scale = 8)
   private BigDecimal unitPrice;
 
   @CreationTimestamp
   private LocalDateTime createdAt;
 
   public Transaction() {}
+
+  public Transaction(
+    Wallet wallet,
+    Asset asset,
+    TransactionType type,
+    BigDecimal quantity,
+    BigDecimal unitPrice
+  ) {
+    this.wallet = wallet;
+    this.asset = asset;
+    this.type = type;
+    this.quantity = quantity;
+    this.unitPrice = unitPrice;
+  }
 
   public Long getId() {
     return id;
